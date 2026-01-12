@@ -26,6 +26,22 @@ app.add_middleware(
 def on_startup():
     create_db_and_tables()
 
+# Debugging: Return detail of 500 errors
+from fastapi.responses import JSONResponse
+@app.exception_handler(500)
+async def internal_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=500,
+        content={"message": f"Internal Server Error: {str(exc)}"},
+    )
+    
+@app.exception_handler(Exception)
+async def catch_all_exception_handler(request, exc):
+    return JSONResponse(
+        status_code=500,
+        content={"detail": f"Server Error: {str(exc)}"},
+    )
+
 @app.get("/api/health")
 def health_check():
     return {"status": "ok"}
