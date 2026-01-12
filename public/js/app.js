@@ -211,8 +211,8 @@ async function handleFormSubmit(e) {
     const method = id ? 'PUT' : 'POST';
     const url = id ? `${API_BASE}/items/${id}` : `${API_BASE}/items`;
 
-    // ID should not be in body for simple cases unless required by Schema (SQLModel handles exclusion usually)
-    if (id) delete data.id;
+    // Always remove ID from body (it's in the URL for updates, and null for creates)
+    delete data.id;
 
     try {
         const res = await fetch(url, {
