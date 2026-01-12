@@ -2,7 +2,7 @@ import os
 from sqlmodel import SQLModel, create_engine, Session
 
 # Fallback to sqlite for local dev if POSTGRES_URL not set
-DATABASE_URL = os.environ.get("POSTGRES_URL")
+DATABASE_URL = os.environ.get("POSTGRES_URL") or os.environ.get("DATABASE_URL")
 if not DATABASE_URL:
     # Use SQLite for local testing if no Postgres URL is provided
     # Warning: Vercel requires Postgres
