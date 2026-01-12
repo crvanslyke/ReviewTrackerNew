@@ -30,5 +30,10 @@ def on_startup():
 def health_check():
     return {"status": "ok"}
 
+@app.get("/")
+def read_root():
+    from fastapi.responses import RedirectResponse
+    return RedirectResponse(url="/index.html")
+
 app.include_router(router, prefix="/api")
 
