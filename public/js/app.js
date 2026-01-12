@@ -221,7 +221,10 @@ async function handleFormSubmit(e) {
             body: JSON.stringify(data)
         });
 
-        if (!res.ok) throw new Error('Save failed');
+        if (!res.ok) {
+            const errorText = await res.text();
+            throw new Error('Save failed: ' + errorText);
+        }
 
         closeModal();
         await fetchItems();
