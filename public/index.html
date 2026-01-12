@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Review Tracker</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-logo">
+                <i data-lucide="book-open-check"></i>
+                <h1>Review<span class="highlight">Tracker</span></h1>
+            </div>
+            <div class="header-actions">
+                <button id="refreshBtn" class="icon-btn" title="Refresh">
+                    <i data-lucide="refresh-cw"></i>
+                </button>
+                <button id="newItemBtn" class="btn btn-primary">
+                    <i data-lucide="plus"></i> New Entry
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Section -->
+        <section class="stats-grid">
+            <div class="stat-card" data-status="active">
+                <div class="stat-icon"><i data-lucide="activity"></i></div>
+                <div class="stat-content">
+                    <h3>Active</h3>
+                    <p id="count-active">0</p>
+                </div>
+            </div>
+            <div class="stat-card" data-status="pending">
+                <div class="stat-icon"><i data-lucide="clock"></i></div>
+                <div class="stat-content">
+                    <h3>Pending</h3>
+                    <p id="count-pending">0</p>
+                </div>
+            </div>
+            <div class="stat-card" data-status="completed">
+                <div class="stat-icon"><i data-lucide="check-circle"></i></div>
+                <div class="stat-content">
+                    <h3>Completed</h3>
+                    <p id="count-completed">0</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="table-container">
+                <table id="reviewsTable">
+                    <thead>
+                        <tr>
+                            <th data-sort="title">Title <i data-lucide="chevrons-up-down" class="sort-icon"></i></th>
+                            <th data-sort="venue">Venue <i data-lucide="chevrons-up-down" class="sort-icon"></i></th>
+                            <th data-sort="role">Role</th>
+                            <th data-sort="status">Status <i data-lucide="chevrons-up-down" class="sort-icon"></i></th>
+                            <th data-sort="due_date">Due Date <i data-lucide="chevrons-up-down" class="sort-icon"></i></th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reviewsTableBody">
+                        <!-- Rows injected by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">New Entry</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <form id="itemForm">
+                <input type="hidden" id="itemId" name="id">
+                
+                <div class="form-group">
+                    <label for="title">Paper Title *</label>
+                    <input type="text" id="title" name="title" required placeholder="e.g. The Impact of Agentic AI">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="manuscript_id">Manuscript ID</label>
+                        <input type="text" id="manuscript_id" name="manuscript_id" placeholder="e.g. MISQ-2024-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="venue">Venue</label>
+                        <input type="text" id="venue" name="venue" list="venueList" placeholder="e.g. ICIS 2024">
+                        <datalist id="venueList">
+                            <!-- Dynamic options -->
+                        </datalist>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="role">Role *</label>
+                        <select id="role" name="role" required>
+                            <option value="Reviewer">Reviewer</option>
+                            <option value="Associate Editor">Associate Editor</option>
+                            <option value="Session Chair">Session Chair</option>
+                            <option value="Author">Author</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status *</label>
+                        <select id="status" name="status" required>
+                            <option value="Invited">Invited</option>
+                            <option value="Active">Active</option>
+                            <option value="In Review">In Review</option>
+                            <option value="Pending Decision">Pending Decision</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Accepted">Accepted</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="due_date">Due Date</label>
+                    <input type="date" id="due_date" name="due_date">
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" name="notes" rows="3" placeholder="Private notes..."></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Entry</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
